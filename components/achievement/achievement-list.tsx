@@ -5,19 +5,21 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
-import { CheckCircle, XCircle, Clock, Award, Flag } from "lucide-react"
+import { CheckCircle, XCircle, Clock, Award, Flag, MessageSquare } from "lucide-react"
 import type { Achievement } from "@/types"
 import { getCategoryColor, getStatusColor, getStatusText } from "@/lib/mock-data"
 
 export default function AchievementList({
   achievements,
   showActions = false,
+  showFeedback = false,
   onApprove,
   onReject,
   onFlag,
 }: {
   achievements: Achievement[]
   showActions?: boolean
+  showFeedback?: boolean
   onApprove?: (id: string) => void
   onReject?: (id: string) => void
   onFlag?: (id: string) => void
@@ -62,12 +64,62 @@ export default function AchievementList({
                 </span>
               </div>
 
-              {achievement?.feedback?.length > 0 && (
-                <div className="mt-3 p-2 bg-amber-50 rounded-md border border-amber-200">
-                  <p className="text-xs font-medium text-amber-800">Feedback Required:</p>
-                  <p className="text-xs text-amber-700">
-                    {achievement.feedback[achievement.feedback.length - 1].message}
-                  </p>
+              {showFeedback && (
+                <div className="mt-4 space-y-3">
+                  {achievement.mentorApproval && (
+                    <div className="rounded-lg bg-muted/50 p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                        <p className="text-sm font-medium">Mentor Feedback</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {achievement.mentorApproval.feedback || "No feedback provided"}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Status: {achievement.mentorApproval.status === "approved" ? (
+                          <span className="text-green-600">Approved</span>
+                        ) : (
+                          <span className="text-red-600">Rejected</span>
+                        )}
+                      </p>
+                    </div>
+                  )}
+
+                  {achievement.hodApproval && (
+                    <div className="rounded-lg bg-muted/50 p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                        <p className="text-sm font-medium">HOD Feedback</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {achievement.hodApproval.feedback || "No feedback provided"}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Status: {achievement.hodApproval.status === "approved" ? (
+                          <span className="text-green-600">Approved</span>
+                        ) : (
+                          <span className="text-red-600">Rejected</span>
+                        )}
+                      </p>
+                    </div>
+                  )}
+
+                  {achievement.feedback.length > 0 && (
+                    <div className="rounded-lg bg-amber-50 p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Flag className="h-4 w-4 text-amber-600" />
+                        <p className="text-sm font-medium text-amber-900">Additional Feedback Required</p>
+                      </div>
+                      {achievement.feedback.map((feedback) => (
+                        <div key={feedback.id} className="mt-2">
+                          <p className="text-sm text-amber-800">{feedback.message}</p>
+                          <p className="text-xs text-amber-700 mt-1">
+                            From: {feedback.userId === "mentor" ? "Mentor" : "HOD"} • {new Date(feedback.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </CardContent>

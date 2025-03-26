@@ -17,6 +17,26 @@ export type Approval = {
     comment: string
 }
 
+export type Student = {
+    id: string
+    name: string
+    email: string
+    rollNumber: string
+    department: string
+    year: number
+    section: string
+    mentorId: string
+}
+
+export type Mentor = {
+    id: string
+    name: string
+    email: string
+    specialization: string
+    department: string
+    maxMentees: number
+}
+
 export type Achievement = {
     id: string
     title: string
