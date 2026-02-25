@@ -1,110 +1,186 @@
-const skills = [
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "Python",
-  "Go",
-  "PostgreSQL",
-  "Docker",
-  "AWS",
-  "Git",
-  "Tailwind CSS",
-  "REST APIs",
-];
-
-const socials = [
-  {
-    label: "GitHub",
-    href: "https://github.com/adipundir",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
-        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-      </svg>
-    ),
-  },
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/adipundir",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
-  },
-  {
-    label: "X",
-    href: "https://x.com/adipundir",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Email",
-    href: "mailto:adi@adipundir.me",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="size-5"
-      >
-        <rect width="20" height="16" x="2" y="4" rx="2" />
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-      </svg>
-    ),
-  },
-];
+import Link from "next/link";
+import Image from "next/image";
+import { site, nav } from "@/lib/site";
+import { FadeIn } from "@/components/fade-in";
 
 export default function Home() {
   return (
-    <div className="flex h-screen items-center justify-center px-6">
-      <main className="flex w-full max-w-xl flex-col items-center gap-8 text-center">
-        <div className="flex flex-col items-center gap-3">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Aditya Pundir
-          </h1>
-          <p className="text-lg text-foreground/60 font-medium">
-            Software Developer
-          </p>
-        </div>
-
-        <p className="max-w-md text-sm leading-relaxed text-foreground/50">
-          I build fast, reliable software. Focused on clean code, great user
-          experiences, and shipping things that matter.
-        </p>
-
-        <div className="flex max-w-md flex-wrap justify-center gap-2">
-          {skills.map((skill) => (
-            <span
-              key={skill}
-              className="rounded-full border border-foreground/10 bg-foreground/[0.03] px-3 py-1 text-xs font-medium text-foreground/70"
+    <div className="mx-auto max-w-2xl px-6 py-12 sm:py-20">
+      <FadeIn>
+        <nav className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          {nav.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              {...(link.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+              className="text-foreground underline underline-offset-4 decoration-foreground/70 hover:decoration-foreground transition-colors"
             >
-              {skill}
-            </span>
+              {link.label}
+            </Link>
           ))}
-        </div>
+        </nav>
+      </FadeIn>
 
-        <div className="flex items-center gap-4">
-          {socials.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
+      <h1 className="mt-10 text-4xl font-bold tracking-tight sm:text-5xl">
+        hi i&apos;m aditya.
+      </h1>
+
+      <div className="mt-10 space-y-7 text-[1.125rem] leading-[1.8]">
+        <FadeIn delay={800}>
+          <p>my motto in life has always been this: fuck around and find out.</p>
+        </FadeIn>
+
+        <FadeIn delay={1000}>
+          <p>
+            my dad got me a computer when i was really young. that sparked
+            everything. at age 13 i got{" "}
+            <Link
+              href="https://www.eccouncil.org/train-certify/certified-ethical-hacker-ceh/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={s.label}
-              className="rounded-full border border-foreground/10 p-2.5 text-foreground/50 transition-colors hover:bg-foreground/5 hover:text-foreground"
+              className="text-foreground underline underline-offset-4 decoration-foreground/70 hover:decoration-foreground transition-colors"
             >
-              {s.icon}
-            </a>
-          ))}
-        </div>
-      </main>
+              CEHv9 certified
+            </Link>
+            . it&apos;s a cert that teaches you how attackers think so you can
+            defend. no one told me to get it. i just wanted to have that
+            knowledge. i still use those security principles today. nothing
+            wasted.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={1200}>
+          <p>
+            after school i joined a college. didn&apos;t like the crowd.
+            didn&apos;t like the vibe. so i left. studied hard for entrance
+            exams and got into a better one the next year.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={1400}>
+          <p>
+            first year of college i had my first win. or at least what i
+            thought was a win back then. i landed my first internship. it
+            didn&apos;t pay much in money. but it paid a lot in knowing what i
+            should not be doing for the rest of my college life.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={1600}>
+          <p>
+            then in 2024 i won my first hackathon. an online hack. $170. not
+            a lot. but i took that money and straight booked a flight to
+            bengaluru. the tech capital of india.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={1800}>
+          <p>
+            that flight changed the track of my life. i met so many goats
+            there. it was impossible to not get inspired. impossible to not
+            want to build something great. since then i challenge myself to be
+            in places i don&apos;t deserve to go. travel. meet new people.
+            explore myself. that&apos;s what new experiences teach you.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={1900}>
+          <div className="relative aspect-[21/9] w-full overflow-hidden rounded-lg">
+            <Image
+              src="/Bangalore-flight.png"
+              alt="Flight to Bengaluru"
+              fill
+              className="object-cover object-[50%_30%]"
+              sizes="(max-width: 768px) 100vw, 672px"
+            />
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={2000}>
+          <p>
+            after a lot of failures and never giving up, for me the first big win
+            back then was $3k in an online hack in 2025. that&apos;s when it
+            clicked. if i never give up it&apos;s impossible to not win.
+            anything is possible. like ANYTHING.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={2200}>
+          <p>
+            2025 was a year i&apos;ll never forget. i shipped many products, some worked, many didn&apos;t.
+            won hackathon bounties. paid my own college fees. took my first
+            international trip. traveled across 15 Indian
+            cities. learned to speak spanish. stayed consistent with the gym.
+            met some amazing people along the way.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={2600}>
+          <p>
+            entering 2026 with starting my own software{" "}
+            <Link
+              href="https://donalabs.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground underline underline-offset-4 decoration-foreground/70 hover:decoration-foreground transition-colors"
+            >
+              company
+            </Link>
+            . got a $6k grant from the government of india to help support
+            product development. super bullish on the indian ecosystem btw.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={2800}>
+          <p>
+            here i am today.
+            <br />
+            looking for my next big leap.
+            <br />
+            never give up. never stop being curious.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={3000}>
+          <p>
+            want to talk? hit me on{" "}
+            <Link
+              href="https://t.me/adipundir"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground underline underline-offset-4 decoration-foreground/70 hover:decoration-foreground transition-colors"
+            >
+              telegram
+            </Link>{" "}
+            or{" "}
+            <Link
+              href="https://x.com/adipundir"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground underline underline-offset-4 decoration-foreground/70 hover:decoration-foreground transition-colors"
+            >
+              x
+            </Link>
+            . i reply to short messages with a clear ask.
+          </p>
+        </FadeIn>
+
+        <FadeIn delay={3200}>
+          <div className="mt-16">
+            <div className="relative col-span-2 aspect-[2/1] w-full overflow-hidden rounded-lg">
+              <Image
+                src="/aditya-japan.png"
+                alt="Aditya"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 672px"
+              />
+            </div>
+          </div>
+        </FadeIn>
+      </div>
     </div>
   );
 }
